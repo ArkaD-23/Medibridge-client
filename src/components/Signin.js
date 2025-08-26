@@ -27,7 +27,7 @@ export default function SignInPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://4.247.161.61:8090/v1/auth/login", {
+      const res = await fetch("https://e23b585095eb.ngrok-free.app/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

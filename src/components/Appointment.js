@@ -28,7 +28,7 @@ export default function AppointmentBooking() {
 
   const fetchDoctors = async () => {
 
-    const res = await fetch("http://4.247.161.61:8090/v1/users/doctors", {
+    const res = await fetch("https://e23b585095eb.ngrok-free.app/v1/users/doctors", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export default function AppointmentBooking() {
       setLoading(false);
       return;
     }
-    const res = await fetch("http://4.247.161.61:8090/v1/appointments/book", {
+    const res = await fetch("https://e23b585095eb.ngrok-free.app/v1/appointments/book", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
