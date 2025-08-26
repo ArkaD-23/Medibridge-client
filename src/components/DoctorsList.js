@@ -21,7 +21,7 @@ export default function DoctorsList() {
 
   const fetchDoctors = async () => {
 
-    const res = await fetch("http://gateway:8090/v1/users/doctors", {
+    const res = await fetch("http://4.247.161.61:8090/v1/users/doctors", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
