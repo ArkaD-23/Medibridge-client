@@ -29,7 +29,7 @@ export default function Chat({ senderId, recipientId }) {
 
       // 1. load history first
       const res = await fetch(
-        `https://804e42dd9e2e.ngrok-free.app/v1/chat/messages/${senderId}/${recipientId}`
+        `https://c6349dbc919f.ngrok-free.app/v1/chat/messages/${senderId}/${recipientId}`
       );
       const data = await res.json();
       setMessages(data);

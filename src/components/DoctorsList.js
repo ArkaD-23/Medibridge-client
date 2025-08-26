@@ -21,7 +21,7 @@ export default function DoctorsList() {
 
   const fetchDoctors = async () => {
 
-    const res = await fetch("https://804e42dd9e2e.ngrok-free.app/v1/users/doctors", {
+    const res = await fetch("https://c6349dbc919f.ngrok-free.app/v1/users/doctors", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

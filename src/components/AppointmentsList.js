@@ -30,7 +30,7 @@ export default function AppointmentsPage() {
         let res;
         if (userData.role !== "DOCTOR") {
           res = await fetch(
-            `https://804e42dd9e2e.ngrok-free.app/v1/appointments/patients/${userData.id}`,
+            `https://c6349dbc919f.ngrok-free.app/v1/appointments/patients/${userData.id}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ export default function AppointmentsPage() {
           );
         } else {
           res = await fetch(
-            `https://804e42dd9e2e.ngrok-free.app/v1/appointments/doctors/${userData.id}`,
+            `https://c6349dbc919f.ngrok-free.app/v1/appointments/doctors/${userData.id}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
