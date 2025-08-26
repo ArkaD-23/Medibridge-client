@@ -30,7 +30,7 @@ export default function SignUpPage() {
 
     setLoading(true);
     try {
-      const res = await fetch("https://e23b585095eb.ngrok-free.app/v1/auth/register", {
+      const res = await fetch("https://804e42dd9e2e.ngrok-free.app/v1/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

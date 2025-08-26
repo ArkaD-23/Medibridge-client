@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUser = createAsyncThunk("user/get", async ({email, token}) => {
-  const response = await fetch(`https://e23b585095eb.ngrok-free.app/v1/users/${email}/${token}`, {
+  const response = await fetch(`https://804e42dd9e2e.ngrok-free.app/v1/users/${email}/${token}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
