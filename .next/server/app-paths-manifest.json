@@ -1,0 +1,12 @@
+{
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(pages)/appointments/[id]/page": "app/(pages)/appointments/[id]/page.js",
+  "/(pages)/doctors/page": "app/(pages)/doctors/page.js",
+  "/(pages)/bookslot/page": "app/(pages)/bookslot/page.js",
+  "/(pages)/message/[senderId]/[recipientId]/page": "app/(pages)/message/[senderId]/[recipientId]/page.js",
+  "/(pages)/signup/page": "app/(pages)/signup/page.js",
+  "/(pages)/signin/page": "app/(pages)/signin/page.js",
+  "/(pages)/videochat/[localId]/[remoteId]/page": "app/(pages)/videochat/[localId]/[remoteId]/page.js",
+  "/page": "app/page.js"
+}
