@@ -15,11 +15,12 @@ import { jwtDecode } from "jwt-decode";
 import { Calendar, Phone, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -49,7 +50,9 @@ export default function Home() {
           </Text>
           <Flex mt="xl" justify="center" gap="md">
             <Button
-              onClick={() => router.push("/bookslot")}
+              onClick={() => {
+                user.email ? router.push("/bookslot") : router.push("/signin");
+              }}
               size="md"
               color="#1e40af"
               radius="xl"
@@ -157,7 +160,9 @@ export default function Home() {
             variant="filled"
             radius="xl"
             style={{ color: "#2563eb" }}
-            onClick={() => router.push("/signup")}
+            onClick={() => {
+              user.email ? router.push("/bookslot") : router.push("/signin");
+            }}
           >
             Get Started
           </Button>

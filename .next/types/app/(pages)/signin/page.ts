@@ -1,4 +1,4 @@
-// File: /home/arkapravadhar/Desktop/PatientApp/client/src/app/(pages)/signin/page.js
+// File: /home/arkapravadhar/Desktop/Medibridge-client/src/app/(pages)/signin/page.js
 import * as entry from '../../../../../src/app/(pages)/signin/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

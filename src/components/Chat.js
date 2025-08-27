@@ -19,7 +19,7 @@ export default function Chat({ senderId, recipientId }) {
 
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8082/ws-chat"),
+      webSocketFactory: () => new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
       reconnectDelay: 5000,
     });
 
@@ -29,7 +29,7 @@ export default function Chat({ senderId, recipientId }) {
 
       // 1. load history first
       const res = await fetch(
-        `https://c6349dbc919f.ngrok-free.app/v1/chat/messages/${senderId}/${recipientId}`
+        `https://gateway-hhpz.onrender.com/v1/chat/messages/${senderId}/${recipientId}`
       );
       const data = await res.json();
       setMessages(data);

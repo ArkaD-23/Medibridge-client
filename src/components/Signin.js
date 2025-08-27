@@ -27,7 +27,7 @@ export default function SignInPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("https://c6349dbc919f.ngrok-free.app/v1/auth/login", {
+      const res = await fetch("https://gateway-hhpz.onrender.com/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -41,7 +41,7 @@ export default function SignInPage() {
 
       localStorage.setItem("token", data.token);
 
-      if (data.success === true) {
+      if (data.status === true) {
         window.location.href = "/";
       } else {
         setError("Please give correct credentials !");

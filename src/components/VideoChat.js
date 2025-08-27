@@ -64,7 +64,7 @@ export default function VideoCall({ localId, remoteId }) {
 
     // ✅ Connect to STOMP
     const client = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8082/ws-chat"),
+      webSocketFactory: () => new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
       reconnectDelay: 5000,
     });
 
