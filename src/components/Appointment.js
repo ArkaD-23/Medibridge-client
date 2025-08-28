@@ -40,7 +40,7 @@ export default function AppointmentBooking() {
 
     const doctorOptions = data.map((doc) => ({
       value: doc.id, 
-      label: doc.email,
+      label: doc.fullname,
     }));
 
     setDoctors(doctorOptions);
@@ -70,7 +70,8 @@ export default function AppointmentBooking() {
       }),
     });
     console.log("Booking response:", res);
-    if (res.ok) {
+    const data = await res.json();
+    if (data.status === "APPROVED") {
       setSuccess(`Appointment booked on ${date} at ${timeSlot}`);
       setLoading(false);
       return;
