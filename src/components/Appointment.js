@@ -69,17 +69,19 @@ export default function AppointmentBooking() {
         date,
       }),
     });
-    console.log("Booking response:", res);
     const data = await res.json();
-    if (data.status === "APPROVED") {
-      setSuccess(`Appointment booked on ${date} at ${timeSlot}`);
+    console.log("Booking response:", data);
+    if(!data.status) {
+      const errorData = await res.json();
+      setError(errorData.message || "Failed to book appointment.");
       setLoading(false);
       return;
     }
-    const errorData = await res.json();
-    setError(errorData.message || "Failed to book appointment.");
+    setSuccess(`Appointment booked on ${date} at ${timeSlot}`);
+    setDoctorId("");
+    setDate(null);
+    setTimeSlot("");
     setLoading(false);
-    return;
   };
 
   return (
