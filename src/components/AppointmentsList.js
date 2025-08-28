@@ -16,6 +16,7 @@ import {
 } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { o } from "framer-motion/dist/types.d-Cjd591yU";
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
@@ -110,7 +111,10 @@ export default function AppointmentsPage() {
             {appointments.map((appt) => {
               const otherId =
                 userData.role === "DOCTOR" ? appt.patientId : appt.doctorId;
-
+              const otherName =
+                userData.role === "DOCTOR"
+                  ? appt.patientName
+                  : appt.doctorName;
               return (
                 <Card
                   key={appt.appointmentId}
@@ -159,7 +163,7 @@ export default function AppointmentsPage() {
                         color="#1e40af"
                         variant="light"
                         onClick={() =>
-                          router.push(`/message/${userData.id}/${otherId}`)
+                          router.push(`/message/${userData.id}/${otherId}/${otherName}`)
                         }
                       >
                         Chat

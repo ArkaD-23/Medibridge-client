@@ -49,9 +49,9 @@ export default function DoctorsList() {
           <Card key={doc.id} shadow="sm" radius="md" withBorder>
             <Group position="apart">
               <Group>
-                <Avatar name={doc.email} color="#1e40af" radius="xl"/>
+                <Avatar name={doc.fullname} color="#1e40af" radius="xl"/>
                 <div>
-                  <Text weight={600}>{doc.email}</Text>
+                  <Text weight={600}>{doc.fullname}</Text>
                   {/* <Text size="sm" color="dimmed">
                     {doc.specialty}
                   </Text> */}
@@ -63,7 +63,7 @@ export default function DoctorsList() {
                   size="xs"
                   color="#1e40af"
                   variant="light"
-                  onClick={() => router.push(`/message/${user.id}/${doc.id}`)}
+                  onClick={() => router.push(`/message/${user.id}/${doc.id}/${doc.fullname}`)}
                 >
                   Chat
                 </Button>

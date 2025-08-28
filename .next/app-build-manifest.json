@@ -6,10 +6,20 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(pages)/bookslot/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(pages)/bookslot/page.js"
+      "static/chunks/app/page.js"
+    ],
+    "/(pages)/doctors/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(pages)/doctors/page.js"
+    ],
+    "/(pages)/message/[senderId]/[recipientId]/[recipientName]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(pages)/message/[senderId]/[recipientId]/[recipientName]/page.js"
     ]
   }
 }

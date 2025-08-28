@@ -8,23 +8,25 @@ import {
   ScrollArea,
   Group,
   Text,
+  Avatar,
+  Flex,
 } from "@mantine/core";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
-export default function Chat({ senderId, recipientId }) {
+export default function Chat({ senderId, recipientId, recipientName }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [stompClient, setStompClient] = useState(null);
 
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
+      webSocketFactory: () =>
+        new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
       reconnectDelay: 5000,
     });
 
     client.onConnect = async () => {
-
       console.log("Connected to WebSocket");
 
       // 1. load history first
@@ -33,7 +35,7 @@ export default function Chat({ senderId, recipientId }) {
       );
       const data = await res.json();
       setMessages(data);
-    
+
       // 2. then subscribe
       client.subscribe(`/topic/messages/${senderId}`, (msg) => {
         console.log("📩 Incoming raw:", msg.body);
@@ -41,7 +43,6 @@ export default function Chat({ senderId, recipientId }) {
         setMessages((prev) => [...prev, body]);
       });
     };
-    
 
     console.log("messages: ", messages);
 
@@ -92,26 +93,42 @@ export default function Chat({ senderId, recipientId }) {
           flexDirection: "column",
         }}
       >
-        {/* Messages */}
-        <ScrollArea style={{ flex: 1, marginBottom: "10px" }}>
+        <Flex
+          align="center"
+          gap="sm"
+          style={{
+            padding: "10px",
+            borderBottom: "1px solid #e5e7eb",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <Avatar name={decodeURIComponent(recipientName)[0].toUpperCase()} radius="xl" color="#1e40af"/>
+          <Text size="md" weight={500}>
+            {recipientName ? decodeURIComponent(recipientName) : ""}
+          </Text>
+        </Flex>
+
+        <ScrollArea style={{ flex: 1, marginTop: "10px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          {Array.isArray(messages) ? messages.map((msg, i) => (
-              <div
-                key={i}
-                style={{
-                  alignSelf:
-                    msg.senderId === senderId ? "flex-end" : "flex-start",
-                  backgroundColor:
-                    msg.senderId === senderId ? "#1e40af" : "#e5e7eb",
-                  color: msg.senderId === senderId ? "white" : "black",
-                  padding: "8px 12px",
-                  borderRadius: 12,
-                  maxWidth: "70%",
-                }}
-              >
-                <Text size="sm">{msg.content}</Text>
-              </div>
-            )) : null}
+            {Array.isArray(messages)
+              ? messages.map((msg, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      alignSelf:
+                        msg.senderId === senderId ? "flex-end" : "flex-start",
+                      backgroundColor:
+                        msg.senderId === senderId ? "#1e40af" : "#e5e7eb",
+                      color: msg.senderId === senderId ? "white" : "black",
+                      padding: "8px 12px",
+                      borderRadius: 12,
+                      maxWidth: "70%",
+                    }}
+                  >
+                    <Text size="sm">{msg.content}</Text>
+                  </div>
+                ))
+              : null}
           </div>
         </ScrollArea>
 
