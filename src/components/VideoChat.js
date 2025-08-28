@@ -2,28 +2,39 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Paper, Button, Group } from "@mantine/core";
-import { Mic, MicOff, Video, VideoOff, PhoneOff, PhoneIcon } from "lucide-react";
+import { Mic, MicOff, Video, VideoOff, PhoneIcon } from "lucide-react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
 export default function VideoCall({ localId, remoteId }) {
   const [micOn, setMicOn] = useState(true);
   const [videoOn, setVideoOn] = useState(true);
+  const [inCall, setInCall] = useState(false); // ✅ track call status
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const pcRef = useRef(null);
   const stompClientRef = useRef(null);
 
+  // Helper: stop all local media tracks
+  const stopLocalStream = () => {
+    const stream = localVideoRef.current?.srcObject;
+    if (stream) {
+      stream.getTracks().forEach((track) => {
+        console.log("🛑 Stopping local track:", track.kind);
+        track.stop();
+      });
+    }
+    if (localVideoRef.current) localVideoRef.current.srcObject = null;
+  };
+
   useEffect(() => {
     console.log("📡 Initializing PeerConnection for", localId, "->", remoteId);
 
-    // ✅ Create Peer Connection
     pcRef.current = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
 
-    // Remote stream
     pcRef.current.ontrack = (event) => {
       console.log("🎥 Remote track received:", event.streams);
       if (remoteVideoRef.current) {
@@ -31,7 +42,6 @@ export default function VideoCall({ localId, remoteId }) {
       }
     };
 
-    // ICE candidates
     pcRef.current.onicecandidate = (event) => {
       if (event.candidate && stompClientRef.current) {
         console.log("❄️ Sending ICE candidate:", event.candidate);
@@ -47,7 +57,6 @@ export default function VideoCall({ localId, remoteId }) {
       }
     };
 
-    // ✅ Capture local camera/mic
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
@@ -62,9 +71,9 @@ export default function VideoCall({ localId, remoteId }) {
         console.error("🚨 Error accessing media devices:", err);
       });
 
-    // ✅ Connect to STOMP
     const client = new Client({
-      webSocketFactory: () => new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
+      webSocketFactory: () =>
+        new SockJS("https://gateway-hhpz.onrender.com/ws-chat"),
       reconnectDelay: 5000,
     });
 
@@ -92,11 +101,13 @@ export default function VideoCall({ localId, remoteId }) {
                 }),
               });
             });
+          setInCall(true);
         } else if (message.type === "ANSWER") {
           console.log("📨 Processing ANSWER");
           pcRef.current?.setRemoteDescription(
             new RTCSessionDescription(message.data)
           );
+          setInCall(true);
         } else if (message.type === "ICE") {
           console.log("📨 Adding remote ICE candidate:", message.data);
           pcRef.current?.addIceCandidate(new RTCIceCandidate(message.data));
@@ -115,6 +126,7 @@ export default function VideoCall({ localId, remoteId }) {
       console.log("🛑 Cleaning up peer connection and STOMP");
       client.deactivate();
       pcRef.current?.close();
+      stopLocalStream(); // ✅ release camera/mic when unmount
     };
   }, [localId, remoteId]);
 
@@ -137,6 +149,15 @@ export default function VideoCall({ localId, remoteId }) {
         data: offer,
       }),
     });
+    setInCall(true);
+  };
+
+  const endCall = () => {
+    console.log("📴 Ending call...");
+    pcRef.current?.close();
+    stopLocalStream(); // ✅ stop mic & cam
+    if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
+    setInCall(false);
   };
 
   return (
@@ -186,7 +207,7 @@ export default function VideoCall({ localId, remoteId }) {
               borderRadius: "8px",
             }}
           />
-          <div
+          {/* <div
             style={{
               position: "absolute",
               bottom: "10px",
@@ -199,7 +220,7 @@ export default function VideoCall({ localId, remoteId }) {
             }}
           >
             Dr. Smith
-          </div>
+          </div> */}
         </div>
 
         {/* Local Video */}
@@ -220,7 +241,12 @@ export default function VideoCall({ localId, remoteId }) {
             autoPlay
             playsInline
             muted
-            style={{ width: "100%", height: "100%", objectFit: "cover", overflow: "hidden"}}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              overflow: "hidden",
+            }}
           />
           <div
             style={{
@@ -272,9 +298,15 @@ export default function VideoCall({ localId, remoteId }) {
             {videoOn ? <Video size={20} /> : <VideoOff size={20} />}
           </Button>
 
-          <Button radius="xl" size="lg" color="green" onClick={startCall}>
-            <PhoneIcon size={20} />
-          </Button>
+          {inCall ? (
+            <Button radius="xl" size="lg" color="red" onClick={endCall}>
+              <PhoneIcon size={20} />
+            </Button>
+          ) : (
+            <Button radius="xl" size="lg" color="green" onClick={startCall}>
+              <PhoneIcon size={20} />
+            </Button>
+          )}
         </Group>
       </Paper>
     </div>

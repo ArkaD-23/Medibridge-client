@@ -1,5 +1,7 @@
 {
-  "/(pages)/doctors/page": "app/(pages)/doctors/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
-  "/(pages)/message/[senderId]/[recipientId]/[recipientName]/page": "app/(pages)/message/[senderId]/[recipientId]/[recipientName]/page.js"
+  "/(pages)/signin/page": "app/(pages)/signin/page.js",
+  "/(pages)/appointments/[id]/page": "app/(pages)/appointments/[id]/page.js",
+  "/(pages)/videochat/[localId]/[remoteId]/page": "app/(pages)/videochat/[localId]/[remoteId]/page.js"
 }

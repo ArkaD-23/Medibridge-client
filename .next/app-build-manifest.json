@@ -11,15 +11,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/(pages)/doctors/page": [
+    "/(pages)/signin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(pages)/doctors/page.js"
+      "static/chunks/app/(pages)/signin/page.js"
     ],
-    "/(pages)/message/[senderId]/[recipientId]/[recipientName]/page": [
+    "/(pages)/appointments/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(pages)/message/[senderId]/[recipientId]/[recipientName]/page.js"
+      "static/chunks/app/(pages)/appointments/[id]/page.js"
+    ],
+    "/(pages)/videochat/[localId]/[remoteId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(pages)/videochat/[localId]/[remoteId]/page.js"
     ]
   }
 }

@@ -16,7 +16,6 @@ import {
 } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { o } from "framer-motion/dist/types.d-Cjd591yU";
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
